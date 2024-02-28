@@ -50,23 +50,25 @@ class AlphaVantageApi:
 
 		return self.fetch_data(url)
 
+	def news_sentiment(self, date_from, tickers=None, topics=None, limit=10, sort='LATEST'):
 
-	def news_sentiment(self, tickers, date_from, topics=None, limit=10, sort='LATEST'):
+		url = f'https://www.alphavantage.co/query?function=NEWS_SENTIMENT'
 
-		url = f'https://www.alphavantage.co/query?function=NEWS_SENTIMENT&' \
-			  f'&time_from={date_from}apikey={self.key}&limit={limit}%sort={sort}'
 		if tickers:
 			url += f'&tickers={tickers}'
 		elif topics:
 			url += f'&topics={topics}'
+		url += f'&time_from={date_from}&sort={sort}&limit={limit}&apikey={self.key}'
 		return self.fetch_data(url)
 
 
+api_calls = AlphaVantageApi(key)
 
 top_worst_performers = retrieve_data('top_gainers_2024-02-28.json', 'json')
 df_top_gainers = pd.DataFrame(top_worst_performers['top_gainers'])
 df_top_losers = pd.DataFrame(top_worst_performers['top_losers'])
 df_most_actively_traded = pd.DataFrame(top_worst_performers['most_actively_traded'])
 
-
+news_for_bitcoin = api_calls.news_sentiment('20240228T0000', tickers='CRYPTO:BTC')
+print(news_for_bitcoin)
 
