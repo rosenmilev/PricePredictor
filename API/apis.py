@@ -64,11 +64,18 @@ class AlphaVantageApi:
 
 api_calls = AlphaVantageApi(key)
 
-top_worst_performers = retrieve_data('top_gainers_2024-02-28.json', 'json')
+# data = api_calls.top_gainers_losers()
+# save_data('top_gainers', 'json', data)
+
+top_worst_performers = retrieve_data('top_gainers_2024-03-03.json', 'json')
 df_top_gainers = pd.DataFrame(top_worst_performers['top_gainers'])
 df_top_losers = pd.DataFrame(top_worst_performers['top_losers'])
 df_most_actively_traded = pd.DataFrame(top_worst_performers['most_actively_traded'])
 
-news_for_bitcoin = api_calls.news_sentiment('20240228T0000', tickers='CRYPTO:BTC')
+print(df_top_gainers)
+print(df_most_actively_traded)
+print(df_top_losers)
+
+news_for_bitcoin = api_calls.news_sentiment('20240303T0000', tickers='FSR')
 print(news_for_bitcoin)
 
