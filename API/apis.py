@@ -35,6 +35,13 @@ def retrieve_data(file_path, format):
 			retrieved_data = json.load(f)
 	return retrieved_data
 
+class DataParser:
+	def parse_news_data(self, data):
+		articles = []
+		sentiment_values = []
+		for el in data:
+			articles.append()
+
 
 class AlphaVantageApi:
 	def __init__(self, key):
@@ -67,7 +74,7 @@ api_calls = AlphaVantageApi(key)
 # data = api_calls.top_gainers_losers()
 # save_data('top_gainers', 'json', data)
 
-top_worst_performers = retrieve_data('top_gainers_2024-03-03.json', 'json')
+top_worst_performers = retrieve_data('top_gainers_2024-03-19.json', 'json')
 df_top_gainers = pd.DataFrame(top_worst_performers['top_gainers'])
 df_top_losers = pd.DataFrame(top_worst_performers['top_losers'])
 df_most_actively_traded = pd.DataFrame(top_worst_performers['most_actively_traded'])
@@ -76,6 +83,13 @@ print(df_top_gainers)
 print(df_most_actively_traded)
 print(df_top_losers)
 
-news_for_bitcoin = api_calls.news_sentiment('20240303T0000', tickers='FSR')
-print(news_for_bitcoin)
+# news_sentiment = api_calls.news_sentiment('20240318T0000', 'FSR')
+# save_data('news_sentiment_FSR', 'json', news_sentiment)
+
+# news_bitcoin = api_calls.news_sentiment('20240318T0000', 'CRYPTO:BTC')
+# save_data('news_sentiment_BTC', 'json', news_bitcoin)
+
+news_data_fsr = retrieve_data('news_sentiment_FSR_2024-03-19.json', 'json')
+news_data_btc = retrieve_data('news_sentiment_BTC_2024-03-19.json', 'json')
+print(news_data_btc)
 
